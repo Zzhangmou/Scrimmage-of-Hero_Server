@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F5E9D1E0-79BF-4F9E-86F4-D56EFD5A48FF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Z_Scrimmage</RootNamespace>
+    <AssemblyName>Z_Scrimmage</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client\ClientState.cs" />
+    <Compile Include="Client\Player.cs" />
+    <Compile Include="Client\PlayerData.cs" />
+    <Compile Include="Client\PlayerManager.cs" />
+    <Compile Include="Db\DbManager.cs" />
+    <Compile Include="MainClass.cs" />
+    <Compile Include="NetManager.cs" />
+    <Compile Include="NetWork\ByteArray.cs" />
+    <Compile Include="NetWork\ProtobufHelper.cs" />
+    <Compile Include="Proto\Handler\EventHandler.cs" />
+    <Compile Include="Proto\MsgAttack.cs" />
+    <Compile Include="Proto\Handler\MsgHandler.cs" />
+    <Compile Include="Proto\MsgMove.cs" />
+    <Compile Include="Proto\MsgPing.cs" />
+    <Compile Include="Proto\MsgPong.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\..\Unity3D网络游戏实战（第二版）\Chapter7_Unity3D网络游戏实战（第二版）_罗培羽\Chapter7\Server\Game\Game\bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>C:\Users\Zz\Desktop\protobufTool\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
