@@ -34,8 +34,8 @@ namespace Common
         {
             using (var memory = new System.IO.MemoryStream(bytes, offset, count))
             {
-                protoName = "proto." + protoName;
-                System.Type t = System.Type.GetType(protoName);
+                //命名空间信息  proto.+类名
+                System.Type t = System.Type.GetType("proto."+protoName);
                 return (ProtoBuf.IExtensible)ProtoBuf.Serializer.NonGeneric.Deserialize(t, memory);
             }
         }

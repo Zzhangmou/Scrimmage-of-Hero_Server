@@ -133,7 +133,7 @@ namespace Z_Scrimmage
             readBuff.readIndex += bodyCount;
             readBuff.CheckAndMoveBytes();
             //分发消息
-            MethodInfo mi = typeof(MsgHandler).GetMethod(protoName);
+            MethodInfo mi = typeof(MsgHandler).GetMethod(protoName + "Handler");
             object[] o = { state, msgBase };
             Console.WriteLine(DateTime.Now + " 收到协议 " + protoName);
             if (mi != null)

@@ -21,7 +21,7 @@ namespace Z_Scrimmage
             this.state = state;
         }
         //发送信息
-        public void send(ProtoBuf.IExtensible msgBase)
+        public void Send(ProtoBuf.IExtensible msgBase)
         {
             NetManager.Send(state, msgBase);
         }
