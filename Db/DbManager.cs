@@ -95,7 +95,7 @@ namespace Z_Scrimmage
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static bool CreatePlayer(string id)
+        public static bool CreatePlayer(string id,string name)
         {
             if (!IsSafeString(id))
             {
@@ -106,7 +106,7 @@ namespace Z_Scrimmage
             //写入数据库
             string sql =
                 string.Format("insert into player set id='{0}',userName='{1}',coin='{2}',winNum='{3}',loseNum='{4}';"
-                , id, playerData.userName, playerData.coin, playerData.winNum, playerData.loseNum);
+                , id, name, playerData.coin, playerData.winNum, playerData.loseNum);
             try
             {
                 MySqlCommand cmd = new MySqlCommand(sql, mySql);
@@ -144,7 +144,7 @@ namespace Z_Scrimmage
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 bool hasRows = dataReader.HasRows;
                 dataReader.Close();
-                return true;
+                return hasRows;
             }
             catch (Exception ex)
             {

@@ -15,7 +15,7 @@ namespace Z_Scrimmage
             //注册
             if (DbManager.Register(msg.id, msg.pw))
             {
-                DbManager.CreatePlayer(msg.id);
+                DbManager.CreatePlayer(msg.id,msg.userName);
                 msg.result = 0;
             }
             else
