@@ -132,7 +132,7 @@ namespace Z_Scrimmage
             ProtoBuf.IExtensible msgBase = ProtobufHelper.Decode(protoName, readBuff.bytes, readBuff.readIndex, bodyCount);
             readBuff.readIndex += bodyCount;
             readBuff.CheckAndMoveBytes();
-            //分发消息
+            //分发消息  方法名+Handler
             MethodInfo mi = typeof(MsgHandler).GetMethod(protoName + "Handler");
             object[] o = { state, msgBase };
             Console.WriteLine(DateTime.Now + " 收到协议 " + protoName);

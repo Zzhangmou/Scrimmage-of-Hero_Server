@@ -47,14 +47,14 @@
     <Compile Include="NetWork\ProtobufHelper.cs" />
     <Compile Include="Proto\Handler\EventHandler.cs" />
     <Compile Include="Proto\Handler\LoginMsgHandler.cs" />
+    <Compile Include="Proto\Handler\RoomMsgHandler.cs" />
     <Compile Include="Proto\Login\MsgKick.cs" />
     <Compile Include="Proto\Login\MsgLogin.cs" />
     <Compile Include="Proto\Login\MsgRegister.cs" />
-    <Compile Include="Proto\MsgAttack.cs" />
     <Compile Include="Proto\Handler\MsgHandler.cs" />
-    <Compile Include="Proto\MsgMove.cs" />
     <Compile Include="Proto\PingPong\MsgPing.cs" />
     <Compile Include="Proto\PingPong\MsgPong.cs" />
+    <Compile Include="Proto\Room\MsgGetUserInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MySql.Data">

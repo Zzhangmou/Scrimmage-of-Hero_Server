@@ -16,12 +16,5 @@ namespace Z_Scrimmage
             MsgPong msgPong = new MsgPong();
             NetManager.Send(c, msgPong);
         }
-        public static void MsgMoveHandler(ClientState c, ProtoBuf.IExtensible msgBase)
-        {
-            MsgMove msgMove = (MsgMove)msgBase;
-            Console.WriteLine(msgMove.x);
-            msgMove.x++;
-            NetManager.Send(c, msgMove);
-        }
     }
 }
