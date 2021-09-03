@@ -54,7 +54,13 @@
     <Compile Include="Proto\Handler\MsgHandler.cs" />
     <Compile Include="Proto\PingPong\MsgPing.cs" />
     <Compile Include="Proto\PingPong\MsgPong.cs" />
+    <Compile Include="Proto\Room\MsgEnterMatch.cs" />
+    <Compile Include="Proto\Room\MsgGetRoomInfo.cs" />
     <Compile Include="Proto\Room\MsgGetUserInfo.cs" />
+    <Compile Include="Proto\Room\MsgLeaveMatch.cs" />
+    <Compile Include="Proto\Room\MsgStartMatch.cs" />
+    <Compile Include="Proto\Room\Room.cs" />
+    <Compile Include="Proto\Room\RoomManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MySql.Data">

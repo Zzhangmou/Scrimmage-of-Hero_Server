@@ -27,7 +27,7 @@ namespace Z_Scrimmage
             }
             catch (Exception ex)
             {
-                Console.WriteLine("数据库连接失败" + ex.Message);
+                Console.WriteLine("数据库连接失败 " + ex.Message);
                 return false;
             }
         }

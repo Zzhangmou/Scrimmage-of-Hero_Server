@@ -20,5 +20,24 @@ namespace Z_Scrimmage
 
             player.Send(msg);
         }
+
+        public static void MsgStartMatchHandler(ClientState c, ProtoBuf.IExtensible msgBase)
+        {
+            MsgStartMatch msg = (MsgStartMatch)msgBase;
+            Player player = c.player;
+            if (player == null) return;
+            player.heroId = msg.heroId;
+            Room room = RoomManager.AddRoom();
+            room.AddPlayer(c.player.id);
+        }
+
+        public static void MsgLeaveMatchHandler(ClientState c, ProtoBuf.IExtensible msgBase)
+        {
+            Player player = c.player;
+            if (player == null) return;
+            Room room = RoomManager.GetRoom(player.roomId);
+            if (room == null) return;
+            room.RemovePlayer(player.id);
+        }
     }
 }
