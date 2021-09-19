@@ -30,6 +30,8 @@ namespace Z_Scrimmage
         public int camp = 0;
         //选择人物
         public int heroId = -1;
+        //选择地图
+        public int mapId = -1;
         //生命值
         //...
         #endregion

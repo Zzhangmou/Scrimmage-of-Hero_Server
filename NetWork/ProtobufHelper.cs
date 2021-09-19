@@ -32,10 +32,10 @@ namespace Common
         /// <returns></returns>
         public static ProtoBuf.IExtensible Decode(string protoName, byte[] bytes, int offset, int count)
         {
-            using (var memory = new System.IO.MemoryStream(bytes, offset, count))
+            using (System.IO.MemoryStream memory = new System.IO.MemoryStream(bytes, offset, count))
             {
                 //命名空间信息  proto.+类名
-                System.Type t = System.Type.GetType("proto."+protoName);
+                Type t = Type.GetType("proto."+protoName);
                 return (ProtoBuf.IExtensible)ProtoBuf.Serializer.NonGeneric.Deserialize(t, memory);
             }
         }
@@ -84,4 +84,3 @@ namespace Common
         }
     }
 }
-

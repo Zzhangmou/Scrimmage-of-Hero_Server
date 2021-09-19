@@ -45,7 +45,9 @@
     <Compile Include="NetManager.cs" />
     <Compile Include="NetWork\ByteArray.cs" />
     <Compile Include="NetWork\ProtobufHelper.cs" />
+    <Compile Include="Proto\Game\MsgSyncPos.cs" />
     <Compile Include="Proto\Handler\EventHandler.cs" />
+    <Compile Include="Proto\Handler\GameSyncMsgHandler.cs" />
     <Compile Include="Proto\Handler\LoginMsgHandler.cs" />
     <Compile Include="Proto\Handler\RoomMsgHandler.cs" />
     <Compile Include="Proto\Login\MsgKick.cs" />
@@ -58,6 +60,8 @@
     <Compile Include="Proto\Room\MsgGetRoomInfo.cs" />
     <Compile Include="Proto\Room\MsgGetUserInfo.cs" />
     <Compile Include="Proto\Room\MsgLeaveMatch.cs" />
+    <Compile Include="Proto\Room\MsgPrepared.cs" />
+    <Compile Include="Proto\Room\MsgStartGame.cs" />
     <Compile Include="Proto\Room\MsgStartMatch.cs" />
     <Compile Include="Proto\Room\Room.cs" />
     <Compile Include="Proto\Room\RoomManager.cs" />

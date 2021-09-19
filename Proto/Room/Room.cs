@@ -11,8 +11,9 @@ namespace Z_Scrimmage
     {
         //房间Id
         public int id;
+        public int preparedNum = 0;
         //房间最大玩家数
-        public int maxPlayer = 6;
+        public int maxPlayer = 2;
         //玩家列表
         public List<string> playerIds = new List<string>();
         public enum Status
@@ -21,7 +22,11 @@ namespace Z_Scrimmage
             Fight = 1
         }
         public Status status = Status.Prepare;
-
+        /// <summary>
+        /// 添加玩家
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool AddPlayer(string id)
         {
             Player player = PlayerManager.GetPlayer(id);
@@ -40,13 +45,24 @@ namespace Z_Scrimmage
             //设置玩家数据
             player.camp = SwitchCamp();
             player.roomId = this.id;
+            Console.WriteLine(player.data.userName + "加入房间匹配，所选人物id：" + player.heroId);
 
             //广播
             Broadcast(new MsgEnterMatch() { currentMatchNum = playerIds.Count });
 
+            //如果房间人满 则开始游戏
+            if (playerIds.Count == maxPlayer)
+            {
+                Console.WriteLine("开始游戏");
+                SendAllPlayerInfo();
+            }
             return true;
         }
-
+        /// <summary>
+        /// 移除玩家
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool RemovePlayer(string id)
         {
             Player player = PlayerManager.GetPlayer(id);
@@ -75,7 +91,10 @@ namespace Z_Scrimmage
 
             return true;
         }
-
+        /// <summary>
+        /// 分配阵营
+        /// </summary>
+        /// <returns></returns>
         private int SwitchCamp()
         {
             int count1 = 0;
@@ -94,6 +113,23 @@ namespace Z_Scrimmage
                 return 2;
         }
 
+        public void SendAllPlayerInfo()
+        {
+            MsgGetRoomInfo msg = new MsgGetRoomInfo();
+            for (int i = 0; i < playerIds.Count; i++)
+            {
+                Player player = PlayerManager.GetPlayer(playerIds[i]);
+                //组装协议
+                msg.players.Add(new PlayerInfo()
+                {
+                    id = player.id,
+                    camp = player.camp,
+                    heroId = player.heroId
+                });
+            }
+            //发送协议
+            Broadcast(msg);
+        }
         //广播消息
         public void Broadcast(ProtoBuf.IExtensible msg)
         {

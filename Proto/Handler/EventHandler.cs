@@ -14,6 +14,13 @@ namespace Z_Scrimmage
             //下线
             if (c.player != null)
             {
+                //离开 移除
+                int roomId = c.player.roomId;
+                if (roomId >= 0)
+                {
+                    Room room = RoomManager.GetRoom(roomId);
+                    room.RemovePlayer(c.player.id);
+                }
                 //保存数据
                 DbManager.UpdatePlayerData(c.player.id, c.player.data);
                 //移除

@@ -17,7 +17,7 @@ namespace Z_Scrimmage
         {
             if (!DbManager.Connect("game", "127.0.0.1", 3306, "root", ""))
                 return;
-            NetManager.StartLoop(8080);
+            NetManager.StartLoop(18188);
         }
     }
 }

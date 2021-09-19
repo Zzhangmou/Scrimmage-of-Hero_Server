@@ -39,5 +39,24 @@ namespace Z_Scrimmage
             if (room == null) return;
             room.RemovePlayer(player.id);
         }
+
+        public static void MsgPreparedHandler(ClientState c, ProtoBuf.IExtensible msgBase)
+        {
+            Player player = c.player;
+            if (player == null) return;
+            Room room = RoomManager.GetRoom(player.roomId);
+            room.preparedNum++;
+
+            MsgPrepared msg = new MsgPrepared
+            {
+                currentNum = room.preparedNum,
+                maxNum = room.maxPlayer
+            };
+
+            room.Broadcast(msg);
+
+            if (room.preparedNum == room.maxPlayer)
+                room.Broadcast(new MsgStartGame());
+        }
     }
 }
