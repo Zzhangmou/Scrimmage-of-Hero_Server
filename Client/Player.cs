@@ -17,6 +17,7 @@ namespace Z_Scrimmage
         public PlayerData data;
 
         #region 临时数据
+        public bool isDead;
         //坐标 旋转
         public float x;
         public float y;

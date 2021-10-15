@@ -22,6 +22,9 @@ namespace Z_Scrimmage
             Fight = 1
         }
         public Status status = Status.Prepare;
+
+        public int count1Death = 0;
+        public int count2Death = 0;
         /// <summary>
         /// 添加玩家
         /// </summary>
@@ -124,7 +127,8 @@ namespace Z_Scrimmage
                 {
                     id = player.id,
                     camp = player.camp,
-                    heroId = player.heroId
+                    heroId = player.heroId,
+                    userName = player.data.userName
                 });
             }
             //发送协议
@@ -137,6 +141,38 @@ namespace Z_Scrimmage
             {
                 Player player = PlayerManager.GetPlayer(id);
                 player.Send(msg);
+            }
+        }
+        public void BroadcastWithSelect(ProtoBuf.IExtensible msg, string sendId)
+        {
+            foreach (string id in playerIds)
+            {
+                if (id != sendId)
+                {
+                    Player player = PlayerManager.GetPlayer(id);
+                    player.Send(msg);
+                }
+            }
+        }
+        public void CheckPlayerCampStatus()
+        {
+            if (count1Death >= maxPlayer / 2)
+            {
+                MsgBattleResult msg = new MsgBattleResult()
+                {
+                    winCamp = 2,
+                    loseCamp = 1
+                };
+                Broadcast(msg);
+            }
+            if (count2Death >= maxPlayer / 2)
+            {
+                MsgBattleResult msg = new MsgBattleResult()
+                {
+                    winCamp = 1,
+                    loseCamp = 2
+                };
+                Broadcast(msg);
             }
         }
     }

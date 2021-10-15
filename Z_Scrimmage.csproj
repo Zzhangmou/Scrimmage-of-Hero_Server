@@ -45,7 +45,11 @@
     <Compile Include="NetManager.cs" />
     <Compile Include="NetWork\ByteArray.cs" />
     <Compile Include="NetWork\ProtobufHelper.cs" />
+    <Compile Include="Proto\Game\MsgGeneratePrefab.cs" />
+    <Compile Include="Proto\Game\MsgHit.cs" />
+    <Compile Include="Proto\Game\MsgResult.cs" />
     <Compile Include="Proto\Game\MsgSyncPos.cs" />
+    <Compile Include="Proto\Handler\BattleMsgHandler.cs" />
     <Compile Include="Proto\Handler\EventHandler.cs" />
     <Compile Include="Proto\Handler\GameSyncMsgHandler.cs" />
     <Compile Include="Proto\Handler\LoginMsgHandler.cs" />
