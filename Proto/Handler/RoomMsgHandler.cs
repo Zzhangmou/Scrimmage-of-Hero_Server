@@ -38,6 +38,8 @@ namespace Z_Scrimmage
             Room room = RoomManager.GetRoom(player.roomId);
             if (room == null) return;
             room.RemovePlayer(player.id);
+            //广播协议
+            room.Broadcast(new MsgLeaveMatch() { currentMatchNum = room.playerIds.Count });
         }
 
         public static void MsgPreparedHandler(ClientState c, ProtoBuf.IExtensible msgBase)

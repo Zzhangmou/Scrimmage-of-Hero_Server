@@ -13,15 +13,9 @@ namespace Z_Scrimmage
         public int id;
         public int preparedNum = 0;
         //房间最大玩家数
-        public int maxPlayer = 2;
+        public int maxPlayer = 4;
         //玩家列表
         public List<string> playerIds = new List<string>();
-        public enum Status
-        {
-            Prepare = 0,
-            Fight = 1
-        }
-        public Status status = Status.Prepare;
 
         public int count1Death = 0;
         public int count2Death = 0;
@@ -83,14 +77,13 @@ namespace Z_Scrimmage
             player.camp = 0;
             player.roomId = -1;
             player.heroId = -1;
+            player.isDead = false;
 
             //房间为空
             if (playerIds.Count == 0)
             {
                 RoomManager.RemoveRoom(this.id);
             }
-
-            Broadcast(new MsgLeaveMatch() { currentMatchNum = playerIds.Count });
 
             return true;
         }
@@ -154,6 +147,13 @@ namespace Z_Scrimmage
                 }
             }
         }
+        public void RemoveAllPlayer()
+        {
+            for (int i = playerIds.Count - 1; i >= 0; i--)
+            {
+                RemovePlayer(playerIds[i]);
+            }
+        }
         public void CheckPlayerCampStatus()
         {
             if (count1Death >= maxPlayer / 2)
@@ -164,6 +164,7 @@ namespace Z_Scrimmage
                     loseCamp = 1
                 };
                 Broadcast(msg);
+                RemoveAllPlayer();
             }
             if (count2Death >= maxPlayer / 2)
             {
@@ -173,6 +174,7 @@ namespace Z_Scrimmage
                     loseCamp = 2
                 };
                 Broadcast(msg);
+                RemoveAllPlayer();
             }
         }
     }

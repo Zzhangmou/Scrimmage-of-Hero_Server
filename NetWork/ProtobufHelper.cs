@@ -74,7 +74,7 @@ namespace Common
             //读取长度
             Int16 len = (Int16)((bytes[offset + 1] << 8) | bytes[offset]);
             //检查长度
-            if (len < 0) return "";
+            if (len <= 0) return "";
             //检查长度
             if (offset + 2 + len > bytes.Length) return "";
             //解析

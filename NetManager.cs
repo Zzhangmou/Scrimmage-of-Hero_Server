@@ -64,12 +64,12 @@ namespace Z_Scrimmage
             ByteArray readBuff = state.readBuff;
             //接收
             int count = 0;
-            if (readBuff.remain <= 0)
+            if (readBuff.Remain <= 0)
             {
                 OnReceiveData(state);
                 readBuff.MoveBytes();
             }
-            if (readBuff.remain <= 0)
+            if (readBuff.Remain <= 0)
             {
                 Console.WriteLine("接收失败 ，接收数据超过了数组容量");
                 Close(state);
@@ -77,7 +77,8 @@ namespace Z_Scrimmage
             }
             try
             {
-                count = clientfdSocket.Receive(readBuff.bytes, readBuff.writeIndex, readBuff.remain, 0);
+                count = clientfdSocket.Receive(readBuff.bytes, readBuff.writeIndex, readBuff.Remain, 0);
+                Console.WriteLine("接收到" + count);
             }
             catch (SocketException ex)
             {
@@ -98,30 +99,29 @@ namespace Z_Scrimmage
             OnReceiveData(state);
             readBuff.CheckAndMoveBytes();
         }
-        //关闭连接
-        public static void Close(ClientState state)
-        {
-            MethodInfo mei = typeof(EventHandler).GetMethod("OnDisconnect");
-            object[] ob = { state };
-            mei.Invoke(null, ob);
-            //关闭
-            state.socket.Close();
-            clients.Remove(state.socket);
-        }
+
         //数据处理
         private static void OnReceiveData(ClientState state)
         {
             ByteArray readBuff = state.readBuff;
             //消息长度不够
             if (readBuff.Length <= 2) return;
-            Int16 bodyLength = readBuff.ReadInt16();
+            Console.WriteLine("readBuff Length " + readBuff.Length);
+            //消息体长度
+            int readIndex = readBuff.readIndex;
+            byte[] bytes = readBuff.bytes;
+            //Int16 bodyLength = readBuff.ReadInt16
+            Int16 bodyLength = (Int16)((bytes[readIndex + 1] << 8) | bytes[readIndex]);
+            //Console.WriteLine("bodyLength " + bodyLength);
             //消息体长度不够
             if (readBuff.Length < bodyLength) return;
+            readBuff.readIndex += 2;
             //解析协议名
-            int nameCount;
+            int nameCount = 0;
             string protoName = ProtobufHelper.DecodeName(readBuff.bytes, readBuff.readIndex, out nameCount);
             if (protoName == "")
             {
+                Console.WriteLine("nameCount " + nameCount);
                 Console.WriteLine("解析协议名为空！！！");
                 Close(state);
                 return;
@@ -129,13 +129,19 @@ namespace Z_Scrimmage
             readBuff.readIndex += nameCount;
             //解析协议体
             int bodyCount = bodyLength - nameCount;
+            //if (bodyCount <= 0)
+            //{
+            //    Console.WriteLine("解析失败, bodyCount <=0 ");
+            //    Close(state);
+            //    return;
+            //}
             ProtoBuf.IExtensible msgBase = ProtobufHelper.Decode(protoName, readBuff.bytes, readBuff.readIndex, bodyCount);
             readBuff.readIndex += bodyCount;
             readBuff.CheckAndMoveBytes();
             //分发消息  方法名+Handler
             MethodInfo mi = typeof(MsgHandler).GetMethod(protoName + "Handler");
             object[] o = { state, msgBase };
-            Console.WriteLine(DateTime.Now + " 收到协议 " + protoName);
+            Console.WriteLine(" 收到协议 " + protoName);
             if (mi != null)
                 mi.Invoke(null, o);
             else
@@ -203,6 +209,16 @@ namespace Z_Scrimmage
             {
                 Console.WriteLine("发送失败 " + ex.ToString());
             }
+        }
+        //关闭连接
+        public static void Close(ClientState state)
+        {
+            MethodInfo mei = typeof(EventHandler).GetMethod("OnDisconnect");
+            object[] ob = { state };
+            mei.Invoke(null, ob);
+            //关闭
+            state.socket.Close();
+            clients.Remove(state.socket);
         }
     }
 }
