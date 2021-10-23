@@ -18,8 +18,8 @@ namespace Z_Scrimmage
             if (room == null) return;
 
             msg.id = player.id;
-            room.Broadcast(msg);
-            //room.BroadcastWithSelect(msg, player.id);
+            //room.Broadcast(msg);
+            room.BroadcastWithSelect(msg, player.id);
         }
 
         public static void MsgGeneratePrefabHandler(ClientState c, ProtoBuf.IExtensible msgBase)

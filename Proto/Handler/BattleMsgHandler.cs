@@ -18,8 +18,8 @@ namespace Z_Scrimmage
             if (room == null) return;
 
             msg.attackId = player.id;
-            room.Broadcast(msg);
-            //room.BroadcastWithSelect(msg, player.id);
+            //room.Broadcast(msg);
+            room.BroadcastWithSelect(msg, player.id);
         }
         public static void MsgDeathHandler(ClientState c, ProtoBuf.IExtensible msgBase)
         {

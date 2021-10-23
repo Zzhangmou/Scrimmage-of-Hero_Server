@@ -78,7 +78,7 @@ namespace Z_Scrimmage
             try
             {
                 count = clientfdSocket.Receive(readBuff.bytes, readBuff.writeIndex, readBuff.Remain, 0);
-                Console.WriteLine("接收到" + count);
+                //Console.WriteLine("接收到" + count);
             }
             catch (SocketException ex)
             {
@@ -106,7 +106,7 @@ namespace Z_Scrimmage
             ByteArray readBuff = state.readBuff;
             //消息长度不够
             if (readBuff.Length <= 2) return;
-            Console.WriteLine("readBuff Length " + readBuff.Length);
+            //Console.WriteLine("readBuff Length " + readBuff.Length);
             //消息体长度
             int readIndex = readBuff.readIndex;
             byte[] bytes = readBuff.bytes;

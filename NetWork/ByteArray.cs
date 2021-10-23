@@ -64,7 +64,7 @@ namespace Z_Scrimmage
         /// </summary>
         public void CheckAndMoveBytes()
         {
-            if (Length < 8)
+            if (Length < 64)
                 MoveBytes();
         }
         /// <summary>
