@@ -13,7 +13,7 @@ namespace Z_Scrimmage
         public int id;
         public int preparedNum = 0;
         //房间最大玩家数
-        public int maxPlayer = 1;
+        public int maxPlayer = 6;
         //玩家列表
         public List<string> playerIds = new List<string>();
 
@@ -125,7 +125,14 @@ namespace Z_Scrimmage
                 });
             }
             //发送协议
-            Broadcast(msg);
+            foreach (string id in playerIds)
+            {
+                Player player = PlayerManager.GetPlayer(id);
+                msg.currentCamp = player.camp;
+                player.Send(msg);
+            }
+
+            //Broadcast(msg);
         }
         //广播消息
         public void Broadcast(ProtoBuf.IExtensible msg)

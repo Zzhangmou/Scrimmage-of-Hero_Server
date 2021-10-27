@@ -16,11 +16,20 @@ namespace Z_Scrimmage
         //监听Socket
         public static Socket listenfdSocket;
         //客户端Socket以及状态信息
-        public static Dictionary<Socket, ClientState> clients = new Dictionary<Socket, ClientState>();
+        public static Dictionary<Socket, ClientState> clients;
         //Select检查列表
-        private static List<Socket> checkRead = new List<Socket>();
+        private static List<Socket> checkRead;
         //Ping间隔
         public static long pingInterval = 10;
+        //缓存池
+        private static Dictionary<string, MethodInfo> cache;
+
+        static NetManager()
+        {
+            clients = new Dictionary<Socket, ClientState>();
+            checkRead = new List<Socket>();
+            cache = new Dictionary<string, MethodInfo>();
+        }
 
         public static void StartLoop(int listenPort)
         {
@@ -138,14 +147,28 @@ namespace Z_Scrimmage
             ProtoBuf.IExtensible msgBase = ProtobufHelper.Decode(protoName, readBuff.bytes, readBuff.readIndex, bodyCount);
             readBuff.readIndex += bodyCount;
             readBuff.CheckAndMoveBytes();
+
             //分发消息  方法名+Handler
-            MethodInfo mi = typeof(MsgHandler).GetMethod(protoName + "Handler");
+            MethodInfo mi;
+            if (!cache.ContainsKey(protoName + "Handler"))
+            {
+                mi = typeof(MsgHandler).GetMethod(protoName + "Handler");
+                cache.Add(protoName + "Handler", mi);
+            }
+            else
+            {
+                mi = cache[protoName + "Handler"];
+            }
+
+            //MethodInfo mi = typeof(MsgHandler).GetMethod(protoName + "Handler");
             object[] o = { state, msgBase };
             Console.WriteLine(" 收到协议 " + protoName);
             if (mi != null)
                 mi.Invoke(null, o);
             else
                 Console.WriteLine("协议执行失败 " + protoName);
+
+
             //长度足够继续读取消息
             if (readBuff.Length > 2)
                 OnReceiveData(state);
