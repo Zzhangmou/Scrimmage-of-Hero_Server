@@ -49,13 +49,13 @@ namespace Z_Scrimmage
             Room room = RoomManager.GetRoom(player.roomId);
             room.preparedNum++;
 
-            MsgPrepared msg = new MsgPrepared
-            {
-                currentNum = room.preparedNum,
-                maxNum = room.maxPlayer
-            };
+            //MsgPrepared msg = new MsgPrepared
+            //{
+            //    currentNum = room.preparedNum,
+            //    maxNum = room.maxPlayer
+            //};
 
-            room.Broadcast(msg);
+            //room.Broadcast(msg);
 
             if (room.preparedNum == room.maxPlayer)
                 room.Broadcast(new MsgStartGame());

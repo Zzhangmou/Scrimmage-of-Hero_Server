@@ -13,7 +13,7 @@ namespace Z_Scrimmage
         public int id;
         public int preparedNum = 0;
         //房间最大玩家数
-        public int maxPlayer = 6;
+        public int maxPlayer = 1;
         //玩家列表
         public List<string> playerIds = new List<string>();
 
@@ -129,6 +129,7 @@ namespace Z_Scrimmage
             {
                 Player player = PlayerManager.GetPlayer(id);
                 msg.currentCamp = player.camp;
+                msg.userHeroId = player.heroId;
                 player.Send(msg);
             }
 

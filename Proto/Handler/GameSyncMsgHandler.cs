@@ -41,6 +41,7 @@ namespace Z_Scrimmage
             if (player == null) return;
             Room room = RoomManager.GetRoom(player.roomId);
             if (room == null) return;
+            msg.camp = player.camp;
             room.BroadcastWithSelect(msg, player.id);
         }
     }

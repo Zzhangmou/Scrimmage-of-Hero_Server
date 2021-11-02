@@ -32,6 +32,5 @@ E:\Unity\Scrimmage-of-Hero_Server\bin\Debug\Z_Scrimmage.pdb
 E:\Unity\Scrimmage-of-Hero_Server\bin\Debug\MySql.Data.xml
 E:\Unity\Scrimmage-of-Hero_Server\obj\Debug\Z_Scrimmage.csproj.AssemblyReference.cache
 E:\Unity\Scrimmage-of-Hero_Server\obj\Debug\Z_Scrimmage.csproj.CoreCompileInputs.cache
-E:\Unity\Scrimmage-of-Hero_Server\obj\Debug\Z_Scrimmage.csproj.CopyComplete
 E:\Unity\Scrimmage-of-Hero_Server\obj\Debug\Z_Scrimmage.exe
 E:\Unity\Scrimmage-of-Hero_Server\obj\Debug\Z_Scrimmage.pdb
