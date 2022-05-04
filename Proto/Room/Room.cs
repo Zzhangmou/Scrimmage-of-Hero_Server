@@ -17,8 +17,8 @@ namespace Z_Scrimmage
         //玩家列表
         public List<string> playerIds = new List<string>();
 
-        public int count1Death = 0;
-        public int count2Death = 0;
+        public List<string> count1Death = new List<string>();
+        public List<string> count2Death = new List<string>();
         /// <summary>
         /// 添加玩家
         /// </summary>
@@ -45,7 +45,7 @@ namespace Z_Scrimmage
             Console.WriteLine(player.data.userName + "加入房间匹配，所选人物id：" + player.heroId);
 
             //广播
-            Broadcast(new MsgEnterMatch() { currentMatchNum = playerIds.Count });
+            Broadcast(new MsgEnterMatch() { currentMatchNum = playerIds.Count, allMatchNum = maxPlayer });
 
             //如果房间人满 则开始游戏
             if (playerIds.Count == maxPlayer)
@@ -164,26 +164,40 @@ namespace Z_Scrimmage
         }
         public void CheckPlayerCampStatus()
         {
-            if (count1Death >= maxPlayer / 2)
+            int wincamp, losecamp;
+            if (count1Death.Count >= 3)
             {
-                MsgBattleResult msg = new MsgBattleResult()
-                {
-                    winCamp = 2,
-                    loseCamp = 1
-                };
-                Broadcast(msg);
-                RemoveAllPlayer();
+                wincamp = 2;
+                losecamp = 1;
             }
-            if (count2Death >= maxPlayer / 2)
+            else if (count2Death.Count >= 3)
             {
-                MsgBattleResult msg = new MsgBattleResult()
-                {
-                    winCamp = 1,
-                    loseCamp = 2
-                };
-                Broadcast(msg);
-                RemoveAllPlayer();
+                wincamp = 1;
+                losecamp = 2;
             }
+            else
+                return;
+            foreach (string id in playerIds)
+            {
+                Player player = PlayerManager.GetPlayer(id);
+                if (player.camp == wincamp)
+                {
+                    player.data.winNum++;
+                }
+                else
+                {
+                    player.data.loseNum++;
+                }
+                DbManager.UpdatePlayerData(player.id, player.data);
+            }
+            //发送协议
+            MsgBattleResult msg = new MsgBattleResult()
+            {
+                winCamp = wincamp,
+                loseCamp = losecamp
+            };
+            Broadcast(msg);
+            RemoveAllPlayer();
         }
     }
 }

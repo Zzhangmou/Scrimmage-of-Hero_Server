@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "f5e9d1e0-79bf-4f9e-86f4-d56efd5a48ff": {
+      "ProjectGuid": "f5e9d1e0-79bf-4f9e-86f4-d56efd5a48ff",
+      "DisplayName": "Z_Scrimmage",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "杂项文件",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 1
+}

@@ -36,7 +36,7 @@ namespace Z_Scrimmage
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static bool IsAccountExist(string id)
+        private static bool IsAccountExist(string id)
         {
             if (!IsSafeString(id)) return false;
             string s = string.Format("select * from account where id = '{0}';", id);
@@ -214,7 +214,6 @@ namespace Z_Scrimmage
                 return false;
             }
         }
-
         //判定安全字符
         private static bool IsSafeString(string str)
         {

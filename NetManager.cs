@@ -20,7 +20,7 @@ namespace Z_Scrimmage
         //Select检查列表
         private static List<Socket> checkRead;
         //Ping间隔
-        public static long pingInterval = 10;
+        public static long pingInterval = 20;
         //缓存池
         private static Dictionary<string, MethodInfo> cache;
 
@@ -51,7 +51,7 @@ namespace Z_Scrimmage
                 for (int i = checkRead.Count - 1; i >= 0; i--)
                 {
                     Socket s = checkRead[i];
-                    if (s == listenfdSocket)
+                    if (s == listenfdSocket)//监听socket可读 有客户端连接上来
                         ReadListenfd(s);
                     else
                         ReadClientfd(s);
@@ -59,14 +59,22 @@ namespace Z_Scrimmage
                 Timer();//超时
             }
         }
-
-        private static void Timer()
+        private static void ReadListenfd(Socket listenfdSocket)
         {
-            MethodInfo mei = typeof(EventHandler).GetMethod("OnTimer");
-            object[] ob = { };
-            mei.Invoke(null, ob);
+            try
+            {
+                Socket clientfd = listenfdSocket.Accept();
+                Console.WriteLine(DateTime.Now + " 接收到 " + clientfd.RemoteEndPoint.ToString());
+                ClientState state = new ClientState();
+                state.socket = clientfd;
+                state.lastPingTime = GetTimeStamp();
+                clients.Add(clientfd, state);
+            }
+            catch (SocketException ex)
+            {
+                Console.WriteLine("接收失败 " + ex.ToString());
+            }
         }
-
         private static void ReadClientfd(Socket clientfdSocket)
         {
             ClientState state = clients[clientfdSocket];
@@ -108,7 +116,6 @@ namespace Z_Scrimmage
             OnReceiveData(state);
             readBuff.CheckAndMoveBytes();
         }
-
         //数据处理
         private static void OnReceiveData(ClientState state)
         {
@@ -173,24 +180,12 @@ namespace Z_Scrimmage
             if (readBuff.Length > 2)
                 OnReceiveData(state);
         }
-
-        private static void ReadListenfd(Socket listenfdSocket)
+        private static void Timer()
         {
-            try
-            {
-                Socket clientfd = listenfdSocket.Accept();
-                Console.WriteLine(DateTime.Now + " 接收到 " + clientfd.RemoteEndPoint.ToString());
-                ClientState state = new ClientState();
-                state.socket = clientfd;
-                state.lastPingTime = GetTimeStamp();
-                clients.Add(clientfd, state);
-            }
-            catch (SocketException ex)
-            {
-                Console.WriteLine("接收失败 " + ex.ToString());
-            }
+            MethodInfo mei = typeof(EventHandler).GetMethod("OnTimer");
+            object[] ob = { };
+            mei.Invoke(null, ob);
         }
-
         //重置
         private static void ResetCheckRead()
         {

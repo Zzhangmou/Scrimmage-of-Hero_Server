@@ -9,7 +9,7 @@ namespace Z_Scrimmage
     class RoomManager
     {
         private static int maxId = 1;
-        public static Dictionary<int, Room> rooms = new Dictionary<int, Room>();
+        private static Dictionary<int, Room> rooms = new Dictionary<int, Room>();
 
         //获取房间
         public static Room GetRoom(int id)
@@ -19,7 +19,7 @@ namespace Z_Scrimmage
             return null;
         }
         //创建房间
-        public static Room CreateRoom()
+        private static Room CreateRoom()
         {
             maxId++;
             Room room = new Room();

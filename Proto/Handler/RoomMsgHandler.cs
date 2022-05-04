@@ -39,7 +39,7 @@ namespace Z_Scrimmage
             if (room == null) return;
             room.RemovePlayer(player.id);
             //广播协议
-            room.Broadcast(new MsgLeaveMatch() { currentMatchNum = room.playerIds.Count });
+            room.Broadcast(new MsgLeaveMatch() { currentMatchNum = room.playerIds.Count, allMatchNum = room.maxPlayer });
         }
 
         public static void MsgPreparedHandler(ClientState c, ProtoBuf.IExtensible msgBase)
@@ -49,13 +49,13 @@ namespace Z_Scrimmage
             Room room = RoomManager.GetRoom(player.roomId);
             room.preparedNum++;
 
-            //MsgPrepared msg = new MsgPrepared
-            //{
-            //    currentNum = room.preparedNum,
-            //    maxNum = room.maxPlayer
-            //};
+            MsgPrepared msg = new MsgPrepared
+            {
+                currentNum = room.preparedNum,
+                maxNum = room.maxPlayer
+            };
 
-            //room.Broadcast(msg);
+            room.Broadcast(msg);
 
             if (room.preparedNum == room.maxPlayer)
                 room.Broadcast(new MsgStartGame());
